@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Firestore, collection, collectionData, doc, deleteDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 
 @Component({
@@ -15,7 +16,8 @@ export class EncargadosListPage implements OnInit {
   constructor(
     private firestore: Firestore,
     private alertCtrl: AlertController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -47,6 +49,12 @@ export class EncargadosListPage implements OnInit {
     });
     await alert.present();
   }
+
+  // Editar encargado
+  editarEncargado(encargadoId: string) {
+    this.router.navigate(['/admin/encargados-edit', encargadoId]);
+  }
+  
 
   // Eliminar encargado
   async eliminarEncargado(encargadoId: string) {
