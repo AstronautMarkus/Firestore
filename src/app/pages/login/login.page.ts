@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ToastController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +11,7 @@ export class LoginPage {
   email: string = '';
   password: string = '';
 
-  constructor(private auth: Auth, private router: Router, private toastController: ToastController) {}
+  constructor(private auth: Auth, private router: Router, private toastController: ToastController, private navCtrl: NavController) {}
 
   async login() {
     try {
@@ -33,5 +33,9 @@ export class LoginPage {
       });
       toast.present();
     }
+  }
+
+  navigateToBaseRoute() {
+    this.navCtrl.navigateRoot('/');
   }
 }
