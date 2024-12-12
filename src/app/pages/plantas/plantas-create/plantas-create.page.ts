@@ -55,4 +55,10 @@ export class PlantasCreatePage implements OnInit {
       await toast.present();
     }
   }
+
+    // Redirigir a la pagina principal admin
+    volverAlInicio() {
+      this.router.navigate(['/admin']);
+    }
+
 }
