@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ToastController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +14,7 @@ export class RegisterPage {
   showErrorToast: boolean = false;
   errorMessage: string = '';
 
-  constructor(private auth: Auth, private router: Router, private toastController: ToastController) {}
+  constructor(private auth: Auth, private router: Router, private toastController: ToastController, private navCtrl: NavController) {}
 
   async register() {
     try {
@@ -43,4 +43,7 @@ export class RegisterPage {
     }
   }
 
+  navigateToBaseRoute() {
+    this.navCtrl.navigateRoot('/');
+  }
 }

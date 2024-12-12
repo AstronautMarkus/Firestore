@@ -10,5 +10,5 @@
   <ion-button expand="block" (click)="register()">Register</ion-button>
   <ion-toast [isOpen]="showSuccessToast" message="Registration successful!" duration="2000"></ion-toast>
   <ion-toast [isOpen]="showErrorToast" [message]="errorMessage" duration="2000"></ion-toast>
-  <ion-router-link routerLink="/home">Go to Home</ion-router-link>
+  <ion-button expand="block" (click)="navigateToBaseRoute()">Go to Home</ion-button>
 </ion-content>
