@@ -19,6 +19,16 @@
         <p>Frecuencia de riego: {{ planta.frecuenciaRiego }}</p>
         <p>Ubicación: {{ planta.ubicacion }}</p>
       </ion-label>
+
+      <!-- Botón Editar -->
+      <ion-button fill="clear" color="primary" (click)="editarPlanta(planta.id)">
+        <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+      </ion-button>
+
+      <!-- Botón Borrar -->
+      <ion-button fill="clear" color="danger" (click)="confirmarEliminar(planta.id)">
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      </ion-button>
     </ion-item>
   </ion-list>
 </ion-content>
