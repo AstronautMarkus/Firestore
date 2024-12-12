@@ -1,13 +1,41 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>encargados-detail</ion-title>
+    <ion-title>Detalle del Encargado</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">encargados-detail</ion-title>
+      <ion-title size="large">Detalle del Encargado</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <!-- Loading Indicator -->
+  <ion-loading [isOpen]="isLoading" message="Cargando datos..."></ion-loading>
+
+  <ion-list *ngIf="!isLoading && encargado">
+    <ion-item>
+      <ion-label>
+        <h2>Nombre:</h2>
+        <p>{{ encargado.nombre }}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        <h2>Correo:</h2>
+        <p>{{ encargado.correo }}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        <h2>Teléfono:</h2>
+        <p>{{ encargado.telefono }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-button expand="full" (click)="volverAlListado()">Volver al listado</ion-button>
 </ion-content>

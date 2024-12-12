@@ -54,6 +54,13 @@ export class EncargadosListPage implements OnInit {
   editarEncargado(encargadoId: string) {
     this.router.navigate(['/admin/encargados-edit', encargadoId]);
   }
+
+  // Ver detalles del encargado
+
+  verDetalle(encargadoId: string) {
+    this.router.navigate(['/admin/encargados-detail', encargadoId]);
+  }
+  
   
 
   // Eliminar encargado

@@ -22,6 +22,11 @@
         <p>Teléfono: {{ encargado.telefono }}</p>
       </ion-label>
 
+        <!-- Botón Ver Detalle -->
+        <ion-button fill="clear" color="secondary" (click)="verDetalle(encargado.id)">
+          <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+        </ion-button>
+
         <!-- Botón Editar -->
         <ion-button fill="clear" color="primary" (click)="editarEncargado(encargado.id)">
           <ion-icon slot="icon-only" name="create-outline"></ion-icon>
