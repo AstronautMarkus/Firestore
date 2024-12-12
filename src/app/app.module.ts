@@ -8,12 +8,12 @@ import { AppComponent } from './app.component';
 
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
-import { provideStorage, getStorage } from '@angular/fire/storage'; // Importar Storage
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideStorage, getStorage } from '@angular/fire/storage';
 
 import { FormsModule } from '@angular/forms';
 
-import { environment } from '../environments/environment'; // Configuración de Firebase
-import { AuthService } from './services/auth.service';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,12 +25,10 @@ import { AuthService } from './services/auth.service';
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    AuthService,
-    // Inicializar Firebase App
+    // Configuración de Firebase
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    // Inicializar el módulo de autenticación
     provideAuth(() => getAuth()),
-    // Inicializar Firebase Storage
+    provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
   ],
   bootstrap: [AppComponent],
