@@ -35,10 +35,12 @@ export class AdminPage {
   }
 
   navigateToCrear(type: string) {
-    this.router.navigate([`/${type}-create`]);
+    const url = `/admin/${type}`;
+    this.router.navigate([url]);
   }
 
   navigateToListar(type: string) {
-    this.router.navigate([`/${type}-list`]);
+    const url = `/admin/${type}`;
+    this.router.navigate([url]);
   }
 }
