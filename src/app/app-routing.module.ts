@@ -4,9 +4,15 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   // Ruta para la página de inicio (Home)
   {
-    path: '',
+    path: 'home',
     loadChildren: () =>
       import('./pages/home/home.module').then((m) => m.HomePageModule),
+  },
+  // Ruta principal redirige a 'home'
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
   },
   // Ruta para la página de inicio de sesión (Login)
   {
@@ -29,7 +35,7 @@ const routes: Routes = [
   // Wildcard para rutas no definidas
   {
     path: '**',
-    redirectTo: '', // Puedes redirigir a 'home' o mostrar un 404 si se implementa
+    redirectTo: 'home', // Puedes redirigir a 'home' o mostrar un 404 si se implementa
   },
   {
     path: 'plantas_list',

@@ -43,6 +43,6 @@ export class LoginPage {
   }
 
   navigateToBaseRoute() {
-    this.navCtrl.navigateRoot('/');
+    this.navCtrl.navigateRoot('/home');
   }
 }

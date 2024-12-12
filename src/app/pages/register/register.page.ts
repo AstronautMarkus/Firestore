@@ -51,6 +51,6 @@ export class RegisterPage {
   }
 
   navigateToBaseRoute() {
-    this.navCtrl.navigateRoot('/');
+    this.navCtrl.navigateRoot('/home');
   }
 }
