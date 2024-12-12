@@ -22,6 +22,15 @@ export class PlantasCreatePage implements OnInit {
   ngOnInit() {}
 
   async crearPlanta() {
+    if (!this.planta.nombre || !this.planta.especie || !this.planta.frecuenciaRiego || !this.planta.ubicacion || !this.planta.encargadoId) {
+      const toast = await this.toastCtrl.create({
+        message: 'Por favor, complete todos los campos.',
+        duration: 2000,
+        color: 'warning',
+      });
+      await toast.present();
+      return;
+    }
     try {
       const plantasCollection = collection(this.firestore, 'plantas');
       await addDoc(plantasCollection, this.planta);
