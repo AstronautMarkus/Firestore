@@ -87,4 +87,10 @@ export class PlantasListPage implements OnInit {
   verDetalle(plantaId: string) {
     this.router.navigate(['/admin/plantas-detail', plantaId]);
   }
+
+  // Redirigir a la pagina principal admin
+  volverAlInicio() {
+    this.router.navigate(['/admin']);
+  }
+
 }
