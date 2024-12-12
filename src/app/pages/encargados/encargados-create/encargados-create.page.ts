@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Firestore, collection, addDoc } from '@angular/fire/firestore';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-encargados-create',
@@ -6,10 +8,38 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./encargados-create.page.scss'],
 })
 export class EncargadosCreatePage implements OnInit {
+  encargado = {
+    nombre: '',
+    correo: '',
+    telefono: '',
+  };
 
-  constructor() { }
+  constructor(private firestore: Firestore, private toastCtrl: ToastController) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  async crearEncargado() {
+    try {
+      const encargadosCollection = collection(this.firestore, 'encargados');
+      await addDoc(encargadosCollection, this.encargado);
+
+      const toast = await this.toastCtrl.create({
+        message: 'Encargado creado exitosamente.',
+        duration: 2000,
+        color: 'success',
+      });
+      await toast.present();
+
+      this.encargado = { nombre: '', correo: '', telefono: '' }; // Limpiar formulario
+    } catch (error) {
+      console.error('Error al crear encargado:', error);
+
+      const toast = await this.toastCtrl.create({
+        message: 'Error al crear el encargado.',
+        duration: 2000,
+        color: 'danger',
+      });
+      await toast.present();
+    }
   }
-
 }
