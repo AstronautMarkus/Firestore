@@ -38,6 +38,54 @@ const routes: Routes = [
     path: '**',
     redirectTo: '', // Puedes redirigir a 'home' o mostrar un 404 si se implementa
   },
+  {
+    path: 'plantas-list',
+    loadChildren: () => import('./pages/plantas/plantas-list/plantas-list.module').then( m => m.PlantasListPageModule)
+  },
+  {
+    path: 'plantas-detail',
+    loadChildren: () => import('./pages/plantas/plantas-detail/plantas-detail.module').then( m => m.PlantasDetailPageModule)
+  },
+  {
+    path: 'plantas-create',
+    loadChildren: () => import('./pages/plantas/plantas-create/plantas-create.module').then( m => m.PlantasCreatePageModule)
+  },
+  {
+    path: 'plantas-edit',
+    loadChildren: () => import('./pages/plantas/plantas-edit/plantas-edit.module').then( m => m.PlantasEditPageModule)
+  },
+  {
+    path: 'encargados-list',
+    loadChildren: () => import('./pages/encargados/encargados-list/encargados-list.module').then( m => m.EncargadosListPageModule)
+  },
+  {
+    path: 'encargados-detail',
+    loadChildren: () => import('./pages/encargados/encargados-detail/encargados-detail.module').then( m => m.EncargadosDetailPageModule)
+  },
+  {
+    path: 'encargados-edit',
+    loadChildren: () => import('./pages/encargados/encargados-edit/encargados-edit.module').then( m => m.EncargadosEditPageModule)
+  },
+  {
+    path: 'encargados-create',
+    loadChildren: () => import('./pages/encargados/encargados-create/encargados-create.module').then( m => m.EncargadosCreatePageModule)
+  },
+  {
+    path: 'riegos-list',
+    loadChildren: () => import('./pages/riegos/riegos-list/riegos-list.module').then( m => m.RiegosListPageModule)
+  },
+  {
+    path: 'riegos-create',
+    loadChildren: () => import('./pages/riegos/riegos-create/riegos-create.module').then( m => m.RiegosCreatePageModule)
+  },
+  {
+    path: 'riegos-edit',
+    loadChildren: () => import('./pages/riegos/riegos-edit/riegos-edit.module').then( m => m.RiegosEditPageModule)
+  },
+  {
+    path: 'riegos-detail',
+    loadChildren: () => import('./pages/riegos/riegos-detail/riegos-detail.module').then( m => m.RiegosDetailPageModule)
+  },
 ];
 
 @NgModule({
