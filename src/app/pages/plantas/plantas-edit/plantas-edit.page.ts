@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Firestore, doc, getDoc, updateDoc } from '@angular/fire/firestore';
-import { ToastController } from '@ionic/angular';
+import { ToastController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-plantas-edit',
@@ -11,12 +11,14 @@ import { ToastController } from '@ionic/angular';
 export class PlantasEditPage implements OnInit {
   plantaId!: string; // ID de la planta
   planta: any = {};  // Datos de la planta
+  isLoading = true;  // Estado de carga
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private firestore: Firestore,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private alertCtrl: AlertController // Para confirmación
   ) {}
 
   ngOnInit() {
@@ -34,10 +36,12 @@ export class PlantasEditPage implements OnInit {
         this.planta = plantaSnapshot.data();
       } else {
         console.error('La planta no existe.');
-        this.router.navigate(['/admin']); // Redirige si no existe
+        this.router.navigate(['/admin/plantas-list']); // Redirige si no existe
       }
     } catch (error) {
       console.error('Error al cargar planta:', error);
+    } finally {
+      this.isLoading = false; // Desactivar indicador de carga
     }
   }
 
@@ -67,5 +71,25 @@ export class PlantasEditPage implements OnInit {
       });
       await toast.present();
     }
+  }
+
+  async confirmarCancelar() {
+    const alert = await this.alertCtrl.create({
+      header: 'Confirmar Cancelación',
+      message: '¿Estás seguro de que deseas cancelar los cambios?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+        },
+        {
+          text: 'Sí',
+          handler: () => {
+            this.router.navigate(['/admin/plantas-list']); // Redirige al listado
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 }

@@ -11,7 +11,10 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-list>
+  <!-- Loading Indicator -->
+  <ion-loading [isOpen]="isLoading" message="Cargando planta..."></ion-loading>
+
+  <ion-list *ngIf="!isLoading">
     <ion-item>
       <ion-label position="floating">Nombre</ion-label>
       <ion-input [(ngModel)]="planta.nombre" type="text"></ion-input>
@@ -38,5 +41,6 @@
     </ion-item>
   </ion-list>
 
-  <ion-button expand="full" (click)="guardarCambios()">Guardar Cambios</ion-button>
+  <ion-button expand="full" color="primary" (click)="guardarCambios()">Guardar Cambios</ion-button>
+  <ion-button expand="full" color="danger" (click)="confirmarCancelar()">Cancelar</ion-button>
 </ion-content>
