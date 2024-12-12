@@ -12,6 +12,7 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { FormsModule } from '@angular/forms';
 
 import { environment } from '../environments/environment'; // Configuración de Firebase
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,6 +28,7 @@ import { environment } from '../environments/environment'; // Configuración de 
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     // Inicializar el módulo de autenticación
     provideAuth(() => getAuth()),
+    AuthService,
   ],
   bootstrap: [AppComponent],
 })
