@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideStorage, getStorage } from '@angular/fire/storage'; // Importar Storage
 
 import { FormsModule } from '@angular/forms';
 
@@ -24,11 +25,13 @@ import { AuthService } from './services/auth.service';
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    AuthService,
     // Inicializar Firebase App
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     // Inicializar el módulo de autenticación
     provideAuth(() => getAuth()),
-    AuthService,
+    // Inicializar Firebase Storage
+    provideStorage(() => getStorage()),
   ],
   bootstrap: [AppComponent],
 })
