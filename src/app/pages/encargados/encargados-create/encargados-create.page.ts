@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Firestore, collection, addDoc } from '@angular/fire/firestore';
 import { ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-encargados-create',
@@ -14,7 +15,7 @@ export class EncargadosCreatePage implements OnInit {
     telefono: '',
   };
 
-  constructor(private firestore: Firestore, private toastCtrl: ToastController) {}
+  constructor(private firestore: Firestore, private toastCtrl: ToastController, private router: Router) {}
 
   ngOnInit() {}
 
@@ -42,4 +43,10 @@ export class EncargadosCreatePage implements OnInit {
       await toast.present();
     }
   }
+
+      // Redirigir a la pagina principal admin
+      volverAlInicio() {
+        this.router.navigate(['/admin']);
+      }
+
 }
