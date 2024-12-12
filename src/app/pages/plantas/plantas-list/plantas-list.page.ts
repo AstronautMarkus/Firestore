@@ -11,7 +11,7 @@ import { AlertController, ToastController } from '@ionic/angular';
 })
 export class PlantasListPage implements OnInit {
   plantas$!: Observable<any[]>;
-  isLoading = true; // Add loading state
+  isLoading = true; // Estado de carga
 
   constructor(
     private firestore: Firestore,
@@ -21,10 +21,13 @@ export class PlantasListPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    // Obtener las plantas desde Firestore
     const plantasCollection = collection(this.firestore, 'plantas');
     this.plantas$ = collectionData(plantasCollection, { idField: 'id' });
+
+    // Desactivar el estado de carga cuando se reciban los datos
     this.plantas$.subscribe(() => {
-      this.isLoading = false; // Set loading state to false when data is loaded
+      this.isLoading = false;
     });
   }
 
@@ -79,5 +82,9 @@ export class PlantasListPage implements OnInit {
   editarPlanta(plantaId: string) {
     this.router.navigate(['/admin/plantas-edit', plantaId]);
   }
-  
+
+  // Redirigir a la página de detalles
+  verDetalle(plantaId: string) {
+    this.router.navigate(['/admin/plantas-detail', plantaId]);
+  }
 }
