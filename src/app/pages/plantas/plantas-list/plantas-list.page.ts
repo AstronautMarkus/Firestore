@@ -11,6 +11,7 @@ import { AlertController, ToastController } from '@ionic/angular';
 })
 export class PlantasListPage implements OnInit {
   plantas$!: Observable<any[]>;
+  isLoading = true; // Add loading state
 
   constructor(
     private firestore: Firestore,
@@ -22,6 +23,9 @@ export class PlantasListPage implements OnInit {
   ngOnInit() {
     const plantasCollection = collection(this.firestore, 'plantas');
     this.plantas$ = collectionData(plantasCollection, { idField: 'id' });
+    this.plantas$.subscribe(() => {
+      this.isLoading = false; // Set loading state to false when data is loaded
+    });
   }
 
   // Confirmar eliminación

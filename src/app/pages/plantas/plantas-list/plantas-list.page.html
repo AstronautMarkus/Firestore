@@ -11,7 +11,10 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-list>
+  <!-- Loading Indicator -->
+  <ion-loading [isOpen]="isLoading" message="Cargando plantas..."></ion-loading>
+
+  <ion-list *ngIf="!isLoading">
     <ion-item *ngFor="let planta of plantas$ | async">
       <ion-label>
         <h2>{{ planta.nombre }}</h2>
