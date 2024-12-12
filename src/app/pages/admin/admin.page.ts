@@ -19,4 +19,12 @@ export class AdminPage {
   logout() {
     this.authService.logout();
   }
+
+  navigateToCrear(type: string) {
+    this.router.navigate([`/${type}-create`]);
+  }
+
+  navigateToListar(type: string) {
+    this.router.navigate([`/${type}-list`]);
+  }
 }

@@ -6,5 +6,39 @@
 
 <ion-content class="ion-padding">
   <p *ngIf="userEmail">Iniciado sesión como: {{ userEmail }}</p>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Plantas</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <img src="assets/images/plantas.jpg" alt="Plantas" />
+      <ion-button expand="block" (click)="navigateToCrear('plantas-create')">Crear</ion-button>
+      <ion-button expand="block" (click)="navigateToListar('plantas-list')">Listar</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Encargados</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <img src="assets/images/encargados.jpg" alt="Encargados" />
+      <ion-button expand="block" (click)="navigateToCrear('encargados-create')">Crear</ion-button>
+      <ion-button expand="block" (click)="navigateToListar('encargados-list')">Listar</ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Riegos</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <img src="assets/images/riegos.jpg" alt="Riegos" />
+      <ion-button expand="block" (click)="navigateToCrear('riegos-create')">Crear</ion-button>
+      <ion-button expand="block" (click)="navigateToListar('riegos-list')">Listar</ion-button>
+    </ion-card-content>
+  </ion-card>
+
   <ion-button expand="block" (click)="logout()">Cerrar Sesión</ion-button>
 </ion-content>
