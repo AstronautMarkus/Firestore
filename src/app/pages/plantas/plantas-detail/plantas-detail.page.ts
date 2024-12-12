@@ -10,6 +10,7 @@ import { Firestore, doc, getDoc } from '@angular/fire/firestore';
 export class PlantasDetailPage implements OnInit {
   plantaId!: string; // ID de la planta
   planta: any;       // Datos de la planta
+  isLoading = true;  // Estado de carga
 
   constructor(
     private route: ActivatedRoute,
@@ -36,6 +37,9 @@ export class PlantasDetailPage implements OnInit {
       }
     } catch (error) {
       console.error('Error al cargar la planta:', error);
+    } finally {
+      // Desactivar el indicador de carga
+      this.isLoading = false;
     }
   }
 
