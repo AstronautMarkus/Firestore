@@ -85,10 +85,10 @@ export class RiegosListPage implements OnInit {
   }
 
   // Eliminar riego
-  async eliminarRiego(plantaId: string) {
+  async eliminarRiego(riegoId: string) {
     try {
-      const plantaDocRef = doc(this.firestore, `plantas/${plantaId}`);
-      await deleteDoc(plantaDocRef);
+      const riegoDocRef = doc(this.firestore, `riegos/${riegoId}`);
+      await deleteDoc(riegoDocRef);
 
       // Mostrar mensaje de éxito
       const toast = await this.toastCtrl.create({
