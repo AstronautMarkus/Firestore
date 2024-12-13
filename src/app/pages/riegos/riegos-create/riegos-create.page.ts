@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Firestore, collection, addDoc, collectionData } from '@angular/fire/firestore';
-import { ToastController } from '@ionic/angular';
+import { ToastController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -23,8 +23,14 @@ export class RiegosCreatePage implements OnInit {
 
   hasEncargados = false; // Estado de existencia de encargados
   hasPlantas = false; // Estado de existencia de plantas
+  isLoading = true; // Estado de carga
 
-  constructor(private firestore: Firestore, private toastCtrl: ToastController, private router: Router) {
+  constructor(
+    private firestore: Firestore,
+    private toastCtrl: ToastController,
+    private alertCtrl: AlertController,
+    private router: Router
+  ) {
     const plantasCollection = collection(this.firestore, 'plantas');
     this.plantas = collectionData(plantasCollection, { idField: 'id' });
 
@@ -33,14 +39,21 @@ export class RiegosCreatePage implements OnInit {
 
     this.plantas.subscribe(plantas => {
       this.hasPlantas = plantas.length > 0;
+      this.checkLoadingState();
     });
 
     this.encargados.subscribe(encargados => {
       this.hasEncargados = encargados.length > 0;
+      this.checkLoadingState();
     });
   }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  checkLoadingState() {
+    if (this.hasPlantas !== undefined && this.hasEncargados !== undefined) {
+      this.isLoading = false;
+    }
   }
 
   async crearPlanta() {
@@ -78,7 +91,7 @@ export class RiegosCreatePage implements OnInit {
 
       // Mostrar un mensaje de error
       const toast = await this.toastCtrl.create({
-        message: 'Error al crear la planta. Inténtalo nuevamente.',
+        message: 'Error al crear el riego. Inténtalo nuevamente.',
         duration: 2000,
         color: 'danger',
       });
@@ -100,4 +113,29 @@ export class RiegosCreatePage implements OnInit {
     this.router.navigate(['/admin/plantas-create']);
   }
 
+  // Manejar la salida del formulario
+  async salir() {
+    const hasData = this.riego.plantaId || this.riego.encargadoId || this.riego.fecha || this.riego.observaciones;
+    if (!hasData) {
+      this.router.navigate(['/admin']);
+    } else {
+      const alert = await this.alertCtrl.create({
+        header: 'Confirmar salida',
+        message: '¿Está seguro de que desea salir? Se perderán los datos ingresados.',
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+          },
+          {
+            text: 'Salir',
+            handler: () => {
+              this.router.navigate(['/admin']);
+            },
+          },
+        ],
+      });
+      await alert.present();
+    }
+  }
 }

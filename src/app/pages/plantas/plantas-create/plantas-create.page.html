@@ -13,40 +13,42 @@
 
   <ion-loading [isOpen]="isLoading" message="Cargando encargados..."></ion-loading>
 
-  <ng-container *ngIf="!isLoading && hasEncargados; else noEncargados">
-    <ion-list>
-      <ion-item>
-        <ion-label position="floating">Nombre</ion-label>
-        <ion-input [(ngModel)]="planta.nombre" type="text"></ion-input>
-      </ion-item>
+  <ng-container *ngIf="!isLoading">
+    <ng-container *ngIf="hasEncargados; else noEncargados">
+      <ion-list>
+        <ion-item>
+          <ion-label position="floating">Nombre</ion-label>
+          <ion-input [(ngModel)]="planta.nombre" type="text"></ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="floating">Especie</ion-label>
-        <ion-input [(ngModel)]="planta.especie" type="text"></ion-input>
-      </ion-item>
+        <ion-item>
+          <ion-label position="floating">Especie</ion-label>
+          <ion-input [(ngModel)]="planta.especie" type="text"></ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="floating">Frecuencia de Riego</ion-label>
-        <ion-input [(ngModel)]="planta.frecuenciaRiego" type="text"></ion-input>
-      </ion-item>
+        <ion-item>
+          <ion-label position="floating">Frecuencia de Riego</ion-label>
+          <ion-input [(ngModel)]="planta.frecuenciaRiego" type="text"></ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="floating">Ubicación</ion-label>
-        <ion-input [(ngModel)]="planta.ubicacion" type="text"></ion-input>
-      </ion-item>
+        <ion-item>
+          <ion-label position="floating">Ubicación</ion-label>
+          <ion-input [(ngModel)]="planta.ubicacion" type="text"></ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="floating">Encargado</ion-label>
-        <ion-select [(ngModel)]="planta.encargadoId">
-          <ion-select-option *ngFor="let encargado of encargados | async" [value]="encargado.id">
-            {{ encargado.nombre }}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
-    </ion-list>
+        <ion-item>
+          <ion-label position="floating">Encargado</ion-label>
+          <ion-select [(ngModel)]="planta.encargadoId">
+            <ion-select-option *ngFor="let encargado of encargados | async" [value]="encargado.id">
+              {{ encargado.nombre }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
 
-    <ion-button expand="full" (click)="crearPlanta()">Guardar</ion-button>
-    <ion-button expand="full" (click)="salir()">Salir</ion-button>
+      <ion-button expand="full" (click)="crearPlanta()">Guardar</ion-button>
+      <ion-button expand="full" (click)="salir()">Salir</ion-button>
+    </ng-container>
   </ng-container>
 
   <ng-template #noEncargados>
