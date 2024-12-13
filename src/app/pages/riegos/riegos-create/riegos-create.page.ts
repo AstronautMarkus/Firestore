@@ -57,7 +57,7 @@ export class RiegosCreatePage implements OnInit {
   }
 
   async crearPlanta() {
-    if (!this.riego.plantaId || !this.riego.encargadoId || !this.riego.fecha || !this.riego.observaciones ) {
+    if (!this.riego.plantaId || !this.riego.encargadoId || !this.riego.fecha || !this.riego.observaciones) {
       const toast = await this.toastCtrl.create({
         message: 'Por favor, complete todos los campos.',
         duration: 2000,

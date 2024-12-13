@@ -20,6 +20,15 @@ export class EncargadosCreatePage implements OnInit {
   ngOnInit() {}
 
   async crearEncargado() {
+    if (!this.encargado.nombre || !this.encargado.correo || !this.encargado.telefono) {
+      const toast = await this.toastCtrl.create({
+        message: 'Por favor, complete todos los campos.',
+        duration: 2000,
+        color: 'warning',
+      });
+      await toast.present();
+      return;
+    }
     try {
       const encargadosCollection = collection(this.firestore, 'encargados');
       await addDoc(encargadosCollection, this.encargado);
