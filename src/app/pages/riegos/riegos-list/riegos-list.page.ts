@@ -16,6 +16,7 @@ export class RiegosListPage implements OnInit {
   isLoading = true; // Estado de carga
   encargadosMap: { [key: string]: string } = {};
   plantasMap: { [key: string]: string } = {};
+  encargadoNombre = '';     // Nombre del encargado
   private pendingFetches = 0;
 
   constructor(
@@ -43,7 +44,7 @@ export class RiegosListPage implements OnInit {
   fetchEncargadoNombre(encargadoId: string) {
     const encargadoDocRef = doc(this.firestore, `encargados/${encargadoId}`);
     docData(encargadoDocRef).subscribe((data: any) => {
-      this.encargadosMap[encargadoId] = data.nombre;
+      this.encargadosMap[encargadoId] = data ? data.nombre : 'Nombre no encontrado';
       this.checkLoadingState();
     });
   }
@@ -51,7 +52,7 @@ export class RiegosListPage implements OnInit {
   fetchPlantaNombre(plantaId: string) {
     const plantaDocRef = doc(this.firestore, `plantas/${plantaId}`);
     docData(plantaDocRef).subscribe((data: any) => {
-      this.plantasMap[plantaId] = data.nombre;
+      this.plantasMap[plantaId] = data ? data.nombre : 'Nombre no encontrado';
       this.checkLoadingState();
     });
   }
