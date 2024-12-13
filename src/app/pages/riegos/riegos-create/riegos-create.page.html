@@ -10,4 +10,29 @@
       <ion-title size="large">riegos-create</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <form (ngSubmit)="crearPlanta()">
+    <ion-item>
+      <ion-label position="floating">Planta</ion-label>
+      <ion-select [(ngModel)]="riego.plantaId" name="plantaId" required>
+        <ion-select-option *ngFor="let planta of plantas | async" [value]="planta.id">{{ planta.nombre }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Encargado</ion-label>
+      <ion-select [(ngModel)]="riego.encargadoId" name="encargadoId" required>
+        <ion-select-option *ngFor="let encargado of encargados | async" [value]="encargado.id">{{ encargado.nombre }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Fecha</ion-label>
+      <ion-datetime [(ngModel)]="riego.fecha" name="fecha" required></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Observaciones</ion-label>
+      <ion-textarea [(ngModel)]="riego.observaciones" name="observaciones" required></ion-textarea>
+    </ion-item>
+    <ion-button expand="full" type="submit">Crear Riego</ion-button>
+    <ion-button expand="full" color="medium" (click)="volverAlInicio()">Cancelar</ion-button>
+  </form>
 </ion-content>
