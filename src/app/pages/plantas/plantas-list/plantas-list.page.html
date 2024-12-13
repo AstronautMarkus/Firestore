@@ -14,32 +14,46 @@
   <!-- Loading Indicator -->
   <ion-loading [isOpen]="isLoading" message="Cargando plantas..."></ion-loading>
 
-  <ion-list *ngIf="!isLoading">
-    <ion-item *ngFor="let planta of plantas$ | async">
-      <ion-label>
-        <h2>{{ planta.nombre }}</h2>
-        <p>Especie: {{ planta.especie }}</p>
-        <p>Frecuencia de riego: {{ planta.frecuenciaRiego }}</p>
-        <p>Ubicación: {{ planta.ubicacion }}</p>
-      </ion-label>
+  <ng-container *ngIf="!isLoading">
+    <ion-list *ngIf="hasPlantas; else noData">
+      <ion-item *ngFor="let planta of plantas$ | async">
+        <ion-label>
+          <h2>{{ planta.nombre }}</h2>
+          <p>Especie: {{ planta.especie }}</p>
+          <p>Frecuencia de riego: {{ planta.frecuenciaRiego }}</p>
+          <p>Ubicación: {{ planta.ubicacion }}</p>
+        </ion-label>
 
-      <!-- Botón Ver Detalle -->
-      <ion-button fill="clear" color="secondary" (click)="verDetalle(planta.id)">
-        <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
-      </ion-button>
+        <!-- Botón Ver Detalle -->
+        <ion-button fill="clear" color="secondary" (click)="verDetalle(planta.id)">
+          <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+        </ion-button>
 
-      <!-- Botón Editar -->
-      <ion-button fill="clear" color="primary" (click)="editarPlanta(planta.id)">
-        <ion-icon slot="icon-only" name="create-outline"></ion-icon>
-      </ion-button>
+        <!-- Botón Editar -->
+        <ion-button fill="clear" color="primary" (click)="editarPlanta(planta.id)">
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        </ion-button>
 
-      <!-- Botón Borrar -->
-      <ion-button fill="clear" color="danger" (click)="confirmarEliminar(planta.id)">
-        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-      </ion-button>
-    </ion-item>
-  </ion-list>
+        <!-- Botón Borrar -->
+        <ion-button fill="clear" color="danger" (click)="confirmarEliminar(planta.id)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
 
+    <!-- Mensaje de no datos -->
+    <ng-template #noData>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>No hay plantas disponibles</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>No se encontraron plantas. Por favor, agrega una nueva.</p>
+          <ion-button expand="block" color="primary" (click)="crearNuevaPlanta()">Agregar Nueva Planta</ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ng-template>
+  </ng-container>
 
   <ion-button expand="full" (click)="volverAlInicio()">Volver a inicio</ion-button>
 </ion-content>
