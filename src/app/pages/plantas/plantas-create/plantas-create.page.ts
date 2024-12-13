@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Firestore, collection, addDoc, collectionData } from '@angular/fire/firestore';
-import { ToastController } from '@ionic/angular';
+import { ToastController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -20,10 +20,12 @@ export class PlantasCreatePage implements OnInit {
 
   encargados: Observable<any[]>; // Lista de encargados
   hasEncargados = false; // Estado de existencia de encargados
+  isLoading = true; // Estado de carga
 
   constructor(
     private firestore: Firestore,
     private toastCtrl: ToastController,
+    private alertCtrl: AlertController,
     private router: Router
   ) {
     // Cargar encargados desde Firestore
@@ -32,6 +34,7 @@ export class PlantasCreatePage implements OnInit {
 
     this.encargados.subscribe(encargados => {
       this.hasEncargados = encargados.length > 0;
+      this.isLoading = false; // Desactivar el estado de carga cuando se reciban los datos
     });
   }
 
@@ -88,5 +91,31 @@ export class PlantasCreatePage implements OnInit {
   // Redirigir a la página de creación de nuevo encargado
   crearNuevoEncargado() {
     this.router.navigate(['/admin/encargados-create']);
+  }
+
+  // Manejar la salida del formulario
+  async salir() {
+    const hasData = this.planta.nombre || this.planta.especie || this.planta.frecuenciaRiego || this.planta.ubicacion || this.planta.encargadoId;
+    if (!hasData) {
+      this.router.navigate(['/admin']);
+    } else {
+      const alert = await this.alertCtrl.create({
+        header: 'Confirmar salida',
+        message: '¿Está seguro de que desea salir? Se perderán los datos ingresados.',
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+          },
+          {
+            text: 'Salir',
+            handler: () => {
+              this.router.navigate(['/admin']);
+            },
+          },
+        ],
+      });
+      await alert.present();
+    }
   }
 }

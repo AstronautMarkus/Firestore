@@ -11,7 +11,9 @@
     </ion-toolbar>
   </ion-header>
 
-  <ng-container *ngIf="hasEncargados; else noEncargados">
+  <ion-loading [isOpen]="isLoading" message="Cargando encargados..."></ion-loading>
+
+  <ng-container *ngIf="!isLoading && hasEncargados; else noEncargados">
     <ion-list>
       <ion-item>
         <ion-label position="floating">Nombre</ion-label>
@@ -44,18 +46,21 @@
     </ion-list>
 
     <ion-button expand="full" (click)="crearPlanta()">Guardar</ion-button>
+    <ion-button expand="full" (click)="salir()">Salir</ion-button>
   </ng-container>
 
   <ng-template #noEncargados>
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>No se puede crear una planta</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p>No hay encargados disponibles. Por favor, crea un encargado primero.</p>
-        <ion-button expand="block" color="primary" (click)="crearNuevoEncargado()">Crear Encargado</ion-button>
-        <ion-button expand="block" color="secondary" (click)="volverAlInicio()">Volver a inicio</ion-button>
-      </ion-card-content>
-    </ion-card>
+    <ng-container *ngIf="!isLoading">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>No se puede crear una planta</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>No hay encargados disponibles. Por favor, crea un encargado primero.</p>
+          <ion-button expand="block" color="primary" (click)="crearNuevoEncargado()">Crear Encargado</ion-button>
+          <ion-button expand="block" color="secondary" (click)="volverAlInicio()">Volver a inicio</ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
   </ng-template>
 </ion-content>
