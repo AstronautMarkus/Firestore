@@ -19,6 +19,7 @@ export class PlantasCreatePage implements OnInit {
   };
 
   encargados: Observable<any[]>; // Lista de encargados
+  hasEncargados = false; // Estado de existencia de encargados
 
   constructor(
     private firestore: Firestore,
@@ -28,6 +29,10 @@ export class PlantasCreatePage implements OnInit {
     // Cargar encargados desde Firestore
     const encargadosCollection = collection(this.firestore, 'encargados');
     this.encargados = collectionData(encargadosCollection, { idField: 'id' });
+
+    this.encargados.subscribe(encargados => {
+      this.hasEncargados = encargados.length > 0;
+    });
   }
 
   ngOnInit() {}
@@ -78,5 +83,10 @@ export class PlantasCreatePage implements OnInit {
 
   volverAlInicio() {
     this.router.navigate(['/admin']);
+  }
+
+  // Redirigir a la página de creación de nuevo encargado
+  crearNuevoEncargado() {
+    this.router.navigate(['/admin/encargados-create']);
   }
 }

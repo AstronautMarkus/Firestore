@@ -11,38 +11,51 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-list>
-    <ion-item>
-      <ion-label position="floating">Nombre</ion-label>
-      <ion-input [(ngModel)]="planta.nombre" type="text"></ion-input>
-    </ion-item>
+  <ng-container *ngIf="hasEncargados; else noEncargados">
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input [(ngModel)]="planta.nombre" type="text"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Especie</ion-label>
-      <ion-input [(ngModel)]="planta.especie" type="text"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label position="floating">Especie</ion-label>
+        <ion-input [(ngModel)]="planta.especie" type="text"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Frecuencia de Riego</ion-label>
-      <ion-input [(ngModel)]="planta.frecuenciaRiego" type="text"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label position="floating">Frecuencia de Riego</ion-label>
+        <ion-input [(ngModel)]="planta.frecuenciaRiego" type="text"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Ubicación</ion-label>
-      <ion-input [(ngModel)]="planta.ubicacion" type="text"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label position="floating">Ubicación</ion-label>
+        <ion-input [(ngModel)]="planta.ubicacion" type="text"></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Encargado</ion-label>
-      <ion-select [(ngModel)]="planta.encargadoId">
-        <ion-select-option *ngFor="let encargado of encargados | async" [value]="encargado.id">
-          {{ encargado.nombre }}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
-  </ion-list>
+      <ion-item>
+        <ion-label position="floating">Encargado</ion-label>
+        <ion-select [(ngModel)]="planta.encargadoId">
+          <ion-select-option *ngFor="let encargado of encargados | async" [value]="encargado.id">
+            {{ encargado.nombre }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
 
-  <ion-button expand="full" (click)="crearPlanta()">Guardar</ion-button>
+    <ion-button expand="full" (click)="crearPlanta()">Guardar</ion-button>
+  </ng-container>
 
-  <ion-button expand="full" (click)="volverAlInicio()">Volver a inicio</ion-button>
+  <ng-template #noEncargados>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>No se puede crear una planta</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>No hay encargados disponibles. Por favor, crea un encargado primero.</p>
+        <ion-button expand="block" color="primary" (click)="crearNuevoEncargado()">Crear Encargado</ion-button>
+        <ion-button expand="block" color="secondary" (click)="volverAlInicio()">Volver a inicio</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
 </ion-content>
