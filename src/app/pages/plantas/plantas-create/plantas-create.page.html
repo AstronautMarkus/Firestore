@@ -33,13 +33,16 @@
     </ion-item>
 
     <ion-item>
-      <ion-label position="floating">Encargado ID</ion-label>
-      <ion-input [(ngModel)]="planta.encargadoId" type="text"></ion-input>
+      <ion-label position="floating">Encargado</ion-label>
+      <ion-select [(ngModel)]="planta.encargadoId">
+        <ion-select-option *ngFor="let encargado of encargados | async" [value]="encargado.id">
+          {{ encargado.nombre }}
+        </ion-select-option>
+      </ion-select>
     </ion-item>
   </ion-list>
 
   <ion-button expand="full" (click)="crearPlanta()">Guardar</ion-button>
 
   <ion-button expand="full" (click)="volverAlInicio()">Volver a inicio</ion-button>
-  
 </ion-content>

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Firestore, collection, addDoc } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, collectionData } from '@angular/fire/firestore';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-plantas-create',
@@ -17,7 +18,17 @@ export class PlantasCreatePage implements OnInit {
     encargadoId: '',
   };
 
-  constructor(private firestore: Firestore, private toastCtrl: ToastController, private router: Router) {}
+  encargados: Observable<any[]>; // Lista de encargados
+
+  constructor(
+    private firestore: Firestore,
+    private toastCtrl: ToastController,
+    private router: Router
+  ) {
+    // Cargar encargados desde Firestore
+    const encargadosCollection = collection(this.firestore, 'encargados');
+    this.encargados = collectionData(encargadosCollection, { idField: 'id' });
+  }
 
   ngOnInit() {}
 
@@ -65,9 +76,7 @@ export class PlantasCreatePage implements OnInit {
     }
   }
 
-    // Redirigir a la pagina principal admin
-    volverAlInicio() {
-      this.router.navigate(['/admin']);
-    }
-
+  volverAlInicio() {
+    this.router.navigate(['/admin']);
+  }
 }
