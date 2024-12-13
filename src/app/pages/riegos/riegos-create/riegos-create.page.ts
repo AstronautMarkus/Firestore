@@ -21,12 +21,23 @@ export class RiegosCreatePage implements OnInit {
   plantas: Observable<any[]>;
   encargados: Observable<any[]>;
 
+  hasEncargados = false; // Estado de existencia de encargados
+  hasPlantas = false; // Estado de existencia de plantas
+
   constructor(private firestore: Firestore, private toastCtrl: ToastController, private router: Router) {
     const plantasCollection = collection(this.firestore, 'plantas');
     this.plantas = collectionData(plantasCollection, { idField: 'id' });
 
     const encargadosCollection = collection(this.firestore, 'encargados');
     this.encargados = collectionData(encargadosCollection, { idField: 'id' });
+
+    this.plantas.subscribe(plantas => {
+      this.hasPlantas = plantas.length > 0;
+    });
+
+    this.encargados.subscribe(encargados => {
+      this.hasEncargados = encargados.length > 0;
+    });
   }
 
   ngOnInit() {
@@ -77,6 +88,16 @@ export class RiegosCreatePage implements OnInit {
 
   volverAlInicio() {
     this.router.navigate(['/admin']);
+  }
+
+  // Redirigir a la página de creación de nuevo encargado
+  crearNuevoEncargado() {
+    this.router.navigate(['/admin/encargados-create']);
+  }
+
+  // Redirigir a la página de creación de nueva planta
+  crearNuevaPlanta() {
+    this.router.navigate(['/admin/plantas-create']);
   }
 
 }

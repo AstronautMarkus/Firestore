@@ -1,38 +1,76 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>riegos-create</ion-title>
+    <ion-title>Crear Riego</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">riegos-create</ion-title>
+      <ion-title size="large">Crear Riego</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <form (ngSubmit)="crearPlanta()">
-    <ion-item>
-      <ion-label position="floating">Planta</ion-label>
-      <ion-select [(ngModel)]="riego.plantaId" name="plantaId" required>
-        <ion-select-option *ngFor="let planta of plantas | async" [value]="planta.id">{{ planta.nombre }}</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Encargado</ion-label>
-      <ion-select [(ngModel)]="riego.encargadoId" name="encargadoId" required>
-        <ion-select-option *ngFor="let encargado of encargados | async" [value]="encargado.id">{{ encargado.nombre }}</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Fecha</ion-label>
-      <ion-datetime [(ngModel)]="riego.fecha" name="fecha" required></ion-datetime>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Observaciones</ion-label>
-      <ion-textarea [(ngModel)]="riego.observaciones" name="observaciones" required></ion-textarea>
-    </ion-item>
-    <ion-button expand="full" type="submit">Crear Riego</ion-button>
-    <ion-button expand="full" color="medium" (click)="volverAlInicio()">Cancelar</ion-button>
-  </form>
+  <ng-container *ngIf="hasEncargados && hasPlantas; else noData">
+    <form (ngSubmit)="crearPlanta()">
+      <ion-item>
+        <ion-label position="floating">Planta</ion-label>
+        <ion-select [(ngModel)]="riego.plantaId" name="plantaId" required>
+          <ion-select-option *ngFor="let planta of plantas | async" [value]="planta.id">{{ planta.nombre }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Encargado</ion-label>
+        <ion-select [(ngModel)]="riego.encargadoId" name="encargadoId" required>
+          <ion-select-option *ngFor="let encargado of encargados | async" [value]="encargado.id">{{ encargado.nombre }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Fecha</ion-label>
+        <ion-datetime [(ngModel)]="riego.fecha" name="fecha" required></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Observaciones</ion-label>
+        <ion-textarea [(ngModel)]="riego.observaciones" name="observaciones" required></ion-textarea>
+      </ion-item>
+      <ion-button expand="full" type="submit">Crear Riego</ion-button>
+      <ion-button expand="full" color="medium" (click)="volverAlInicio()">Cancelar</ion-button>
+    </form>
+  </ng-container>
+
+  <ng-template #noData>
+    <ion-card *ngIf="!hasEncargados && !hasPlantas">
+      <ion-card-header>
+        <ion-card-title>No se puede crear un riego</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>No hay encargados ni plantas disponibles. Por favor, crea un encargado y una planta primero.</p>
+        <ion-button expand="block" color="primary" (click)="crearNuevoEncargado()">Crear Encargado</ion-button>
+        <ion-button expand="block" color="primary" (click)="crearNuevaPlanta()">Crear Planta</ion-button>
+        <ion-button expand="block" color="secondary" (click)="volverAlInicio()">Volver a inicio</ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="!hasEncargados && hasPlantas">
+      <ion-card-header>
+        <ion-card-title>No se puede crear un riego</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>No hay encargados disponibles. Por favor, crea un encargado primero.</p>
+        <ion-button expand="block" color="primary" (click)="crearNuevoEncargado()">Crear Encargado</ion-button>
+        <ion-button expand="block" color="secondary" (click)="volverAlInicio()">Volver a inicio</ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="hasEncargados && !hasPlantas">
+      <ion-card-header>
+        <ion-card-title>No se puede crear un riego</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>No hay plantas disponibles. Por favor, crea una planta primero.</p>
+        <ion-button expand="block" color="primary" (click)="crearNuevaPlanta()">Crear Planta</ion-button>
+        <ion-button expand="block" color="secondary" (click)="volverAlInicio()">Volver a inicio</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
 </ion-content>
