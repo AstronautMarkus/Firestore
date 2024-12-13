@@ -8,9 +8,10 @@ import { Firestore, doc, getDoc } from '@angular/fire/firestore';
   styleUrls: ['./plantas-detail.page.scss'],
 })
 export class PlantasDetailPage implements OnInit {
-  plantaId!: string; // ID de la planta
-  planta: any;       // Datos de la planta
-  isLoading = true;  // Estado de carga
+  plantaId!: string;        // ID de la planta
+  planta: any;              // Datos de la planta
+  encargadoNombre = '';     // Nombre del encargado
+  isLoading = true;         // Estado de carga
 
   constructor(
     private route: ActivatedRoute,
@@ -31,6 +32,11 @@ export class PlantasDetailPage implements OnInit {
 
       if (plantaSnapshot.exists()) {
         this.planta = plantaSnapshot.data();
+
+        // Cargar el nombre del encargado si existe un encargadoId
+        if (this.planta.encargadoId) {
+          this.cargarEncargadoNombre(this.planta.encargadoId);
+        }
       } else {
         console.error('La planta no existe.');
         this.router.navigate(['/admin/plantas-list']); // Redirige si no existe
@@ -38,8 +44,22 @@ export class PlantasDetailPage implements OnInit {
     } catch (error) {
       console.error('Error al cargar la planta:', error);
     } finally {
-      // Desactivar el indicador de carga
-      this.isLoading = false;
+      this.isLoading = false; // Desactivar indicador de carga
+    }
+  }
+
+  async cargarEncargadoNombre(encargadoId: string) {
+    try {
+      const encargadoDocRef = doc(this.firestore, `encargados/${encargadoId}`);
+      const encargadoSnapshot = await getDoc(encargadoDocRef);
+
+      if (encargadoSnapshot.exists()) {
+        this.encargadoNombre = encargadoSnapshot.data()['nombre'];
+      } else {
+        console.error('El encargado no existe.');
+      }
+    } catch (error) {
+      console.error('Error al cargar el nombre del encargado:', error);
     }
   }
 

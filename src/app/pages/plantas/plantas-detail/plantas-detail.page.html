@@ -12,7 +12,7 @@
   </ion-header>
 
   <!-- Loading Indicator -->
-  <ion-loading [isOpen]="isLoading" message="Cargando planta..."></ion-loading>
+  <ion-loading [isOpen]="isLoading" message="Cargando detalles..."></ion-loading>
 
   <ion-list *ngIf="!isLoading && planta">
     <ion-item>
@@ -45,11 +45,11 @@
 
     <ion-item>
       <ion-label>
-        <h2>Encargado ID:</h2>
-        <p>{{ planta.encargadoId }}</p>
+        <h2>Encargado:</h2>
+        <p>{{ encargadoNombre }}</p>
       </ion-label>
     </ion-item>
   </ion-list>
 
-  <ion-button expand="full" (click)="volverAlListado()">Volver al listado</ion-button>
+  <ion-button expand="full" color="medium" (click)="volverAlListado()">Volver al Listado</ion-button>
 </ion-content>
