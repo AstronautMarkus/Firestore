@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Firestore, collection, collectionData, doc, deleteDoc } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 import { docData } from '@angular/fire/firestore';
@@ -12,8 +12,9 @@ import { docData } from '@angular/fire/firestore';
   styleUrls: ['./riegos-list.page.scss'],
 })
 export class RiegosListPage implements OnInit {
-  riegos$!: Observable<any[]>;
+  riegos$: Observable<any[]> = of([]); // Initialize with an empty observable array
   isLoading = true; // Estado de carga
+  hasRiegos = false; // Estado de existencia de riegos
   encargadosMap: { [key: string]: string } = {};
   plantasMap: { [key: string]: string } = {};
   encargadoNombre = '';     // Nombre del encargado
@@ -34,6 +35,10 @@ export class RiegosListPage implements OnInit {
     // Desactivar el estado de carga cuando se reciban los datos
     this.riegos$.subscribe(riegos => {
       this.pendingFetches = riegos.length * 2; // Two fetches per riego (encargado and planta)
+      this.hasRiegos = riegos.length > 0;
+      if (riegos.length === 0) {
+        this.isLoading = false;
+      }
       riegos.forEach(riego => {
         this.fetchEncargadoNombre(riego.encargadoId);
         this.fetchPlantaNombre(riego.plantaId);
@@ -119,6 +124,11 @@ export class RiegosListPage implements OnInit {
   // Redirigir a la página de detalles
   verDetalle(riegoId: string) {
     this.router.navigate(['/admin/riegos-detail', riegoId]);
+  }
+
+  // Redirigir a la página de creación de nuevo riego
+  crearNuevoRiego() {
+    this.router.navigate(['/admin/riegos-create']);
   }
 
   // Redirigir a la pagina principal admin
