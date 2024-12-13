@@ -1,13 +1,45 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>riegos-list</ion-title>
+    <ion-title>Listado de Riegos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">riegos-list</ion-title>
+      <ion-title size="large">Listado de Riegos</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <!-- Loading Indicator -->
+  <ion-loading [isOpen]="isLoading" message="Cargando riegos..."></ion-loading>
+
+  <!-- Lista de Riegos -->
+  <ion-list *ngIf="!isLoading">
+    <ion-item *ngFor="let riego of riegos$ | async">
+      <ion-label>
+        <h2>{{ encargadosMap[riego.encargadoId] }}</h2>
+        <p>Planta: {{ plantasMap[riego.plantaId] }}</p>
+        <p>Fecha: {{ riego.fecha }}</p>
+      </ion-label>
+
+      <!-- Botón Ver Detalle -->
+      <ion-button fill="clear" color="secondary" (click)="verDetalle(riego.id)">
+        <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+      </ion-button>
+
+      <!-- Botón Editar -->
+      <ion-button fill="clear" color="primary" (click)="editarPlanta(riego.id)">
+        <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+      </ion-button>
+
+      <!-- Botón Borrar -->
+      <ion-button fill="clear" color="danger" (click)="confirmarEliminar(riego.id)">
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <!-- Botón Volver -->
+  <ion-button expand="full" color="medium" (click)="volverAlInicio()">Volver al Inicio</ion-button>
 </ion-content>
