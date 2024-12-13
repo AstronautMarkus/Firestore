@@ -11,7 +11,8 @@ import { AlertController, ToastController } from '@ionic/angular';
 })
 export class EncargadosListPage implements OnInit {
   encargados$!: Observable<any[]>;
-  isLoading = true;
+  isLoading = true; // Estado de carga
+  hasEncargados = false; // Estado de existencia de encargados
 
   constructor(
     private firestore: Firestore,
@@ -24,7 +25,8 @@ export class EncargadosListPage implements OnInit {
     const encargadosCollection = collection(this.firestore, 'encargados');
     this.encargados$ = collectionData(encargadosCollection, { idField: 'id' });
 
-    this.encargados$.subscribe(() => {
+    this.encargados$.subscribe(encargados => {
+      this.hasEncargados = encargados.length > 0;
       this.isLoading = false; // Desactivar indicador de carga
     });
   }
@@ -61,7 +63,10 @@ export class EncargadosListPage implements OnInit {
     this.router.navigate(['/admin/encargados-detail', encargadoId]);
   }
   
-  
+  // Redirigir a la página de creación de nuevo encargado
+  crearNuevoEncargado() {
+    this.router.navigate(['/admin/encargados-create']);
+  }
 
   // Eliminar encargado
   async eliminarEncargado(encargadoId: string) {

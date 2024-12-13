@@ -14,13 +14,14 @@
   <!-- Loading Indicator -->
   <ion-loading [isOpen]="isLoading" message="Cargando encargados..."></ion-loading>
 
-  <ion-list *ngIf="!isLoading">
-    <ion-item *ngFor="let encargado of encargados$ | async">
-      <ion-label>
-        <h2>{{ encargado.nombre }}</h2>
-        <p>Correo: {{ encargado.correo }}</p>
-        <p>Teléfono: {{ encargado.telefono }}</p>
-      </ion-label>
+  <ng-container *ngIf="!isLoading">
+    <ion-list *ngIf="hasEncargados; else noData">
+      <ion-item *ngFor="let encargado of encargados$ | async">
+        <ion-label>
+          <h2>{{ encargado.nombre }}</h2>
+          <p>Correo: {{ encargado.correo }}</p>
+          <p>Teléfono: {{ encargado.telefono }}</p>
+        </ion-label>
 
         <!-- Botón Ver Detalle -->
         <ion-button fill="clear" color="secondary" (click)="verDetalle(encargado.id)">
@@ -32,13 +33,26 @@
           <ion-icon slot="icon-only" name="create-outline"></ion-icon>
         </ion-button>
 
-      <!-- Botón Borrar -->
-      <ion-button fill="clear" color="danger" (click)="confirmarEliminar(encargado.id)">
-        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-      </ion-button>
-    </ion-item>
-  </ion-list>
+        <!-- Botón Borrar -->
+        <ion-button fill="clear" color="danger" (click)="confirmarEliminar(encargado.id)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
 
-  
+    <!-- Mensaje de no datos -->
+    <ng-template #noData>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>No hay encargados disponibles</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p>No se encontraron encargados. Por favor, agrega uno nuevo.</p>
+          <ion-button expand="block" color="primary" (click)="crearNuevoEncargado()">Agregar Nuevo Encargado</ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ng-template>
+  </ng-container>
+
   <ion-button expand="full" (click)="volverAlInicio()">Volver a inicio</ion-button>
 </ion-content>
