@@ -1,13 +1,55 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>riegos-detail</ion-title>
+    <ion-title>Detalle del Riego</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">riegos-detail</ion-title>
+      <ion-title size="large">Detalle del Riego</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <!-- Loading Indicator -->
+  <ion-loading [isOpen]="isLoading" message="Cargando detalles..."></ion-loading>
+
+  <!-- Detalle del riego -->
+  <ion-list *ngIf="!isLoading && riego">
+
+
+    <ion-item>
+      <ion-label>
+        <h2>Planta:</h2>
+        <p>{{ plantaNombre }}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        <h2>Encargado:</h2>
+        <p>{{ encargadoNombre }}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        <h2>Fecha:</h2>
+        <p>{{ riego.fecha }}</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        <h2>Observaciones:</h2>
+        <p>{{ riego.observaciones }}</p>
+      </ion-label>
+    </ion-item>
+  
+
+  </ion-list>
+
+
+  <!-- Botón Volver -->
+  <ion-button expand="full" color="medium" (click)="volverAlListado()">Volver al Listado</ion-button>
 </ion-content>
