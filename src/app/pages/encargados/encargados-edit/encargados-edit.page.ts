@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Firestore, doc, getDoc, updateDoc } from '@angular/fire/firestore';
-import { ToastController } from '@ionic/angular';
+import { ToastController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-encargados-edit',
@@ -16,7 +16,8 @@ export class EncargadosEditPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private firestore: Firestore,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private alertCtrl: AlertController // Para confirmación
   ) {}
 
   ngOnInit() {
@@ -64,5 +65,25 @@ export class EncargadosEditPage implements OnInit {
       });
       await toast.present();
     }
+  }
+
+  async confirmarCancelar() {
+    const alert = await this.alertCtrl.create({
+      header: 'Confirmar Cancelación',
+      message: '¿Estás seguro de que deseas cancelar los cambios?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+        },
+        {
+          text: 'Sí',
+          handler: () => {
+            this.router.navigate(['/admin/encargados-list']); // Redirige al listado
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 }
