@@ -32,6 +32,9 @@ export class EncargadosCreatePage implements OnInit {
       await toast.present();
 
       this.encargado = { nombre: '', correo: '', telefono: '' }; // Limpiar formulario
+
+      // Redirigir a la lista de encargadosd
+      this.router.navigate(['/admin/encargados-list']);
     } catch (error) {
       console.error('Error al crear encargado:', error);
 
